@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Database1" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Database1.mdf;Integrated Security=True;Connect Timeout=30" SettingsObjectName="HW2_NoyElbaz.Properties.Settings" SettingsPropertyName="Database1ConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.TblCourseLecturers" Member="TblCourseLecturers">
+    <Type Name="TblCourseLecturer">
+      <Column Name="LecturerId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CourseId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="TblLecturer_TblCourseLecturer" Member="TblLecturer" ThisKey="LecturerId" OtherKey="Id" Type="TblLecturer" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="TblCourse_TblCourseLecturer" Member="TblCourse" ThisKey="CourseId" OtherKey="Id" Type="TblCourse" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.[TblStudents&amp;Courses]" Member="TblStudents_Courses">
+    <Type Name="TblStudents_Course">
+      <Column Name="StudentId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CourseId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="TblStudent_TblStudents_Course" Member="TblStudent" ThisKey="StudentId" OtherKey="Id" Type="TblStudent" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="TblCourse_TblStudents_Course" Member="TblCourse" ThisKey="CourseId" OtherKey="Id" Type="TblCourse" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TblStudents" Member="TblStudents">
+    <Type Name="TblStudent">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="City" Type="System.String" DbType="NChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Birthday" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Association Name="TblStudent_TblStudents_Course" Member="TblStudents_Courses" ThisKey="Id" OtherKey="StudentId" Type="TblStudents_Course" />
+      <Association Name="TblStudent_TblLecturesStudent" Member="TblLecturesStudents" ThisKey="Id" OtherKey="StudentId" Type="TblLecturesStudent" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TblLecturesStudents" Member="TblLecturesStudents">
+    <Type Name="TblLecturesStudent">
+      <Column Name="LecturerId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="StudentId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CourseId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="TblStudent_TblLecturesStudent" Member="TblStudent" ThisKey="StudentId" OtherKey="Id" Type="TblStudent" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="TblLecturer_TblLecturesStudent" Member="TblLecturer" ThisKey="LecturerId" OtherKey="Id" Type="TblLecturer" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="TblCourse_TblLecturesStudent" Member="TblCourse" ThisKey="CourseId" OtherKey="Id" Type="TblCourse" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TblLecturers" Member="TblLecturers">
+    <Type Name="TblLecturer">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="TblLecturer_TblCourseLecturer" Member="TblCourseLecturers" ThisKey="Id" OtherKey="LecturerId" Type="TblCourseLecturer" />
+      <Association Name="TblLecturer_TblLecturesStudent" Member="TblLecturesStudents" ThisKey="Id" OtherKey="LecturerId" Type="TblLecturesStudent" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TblCourses" Member="TblCourses">
+    <Type Name="TblCourse">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CourseName" Type="System.String" DbType="NChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Credits" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Association Name="TblCourse_TblCourseLecturer" Member="TblCourseLecturers" ThisKey="Id" OtherKey="CourseId" Type="TblCourseLecturer" />
+      <Association Name="TblCourse_TblStudents_Course" Member="TblStudents_Courses" ThisKey="Id" OtherKey="CourseId" Type="TblStudents_Course" />
+      <Association Name="TblCourse_TblLecturesStudent" Member="TblLecturesStudents" ThisKey="Id" OtherKey="CourseId" Type="TblLecturesStudent" />
+    </Type>
+  </Table>
+</Database>
